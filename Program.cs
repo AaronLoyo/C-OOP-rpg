@@ -62,6 +62,7 @@ class Hero
         {
             Console.WriteLine("Put the name of the power:");
             Powers[i] = Console.ReadLine();
+
         }
     }
 }

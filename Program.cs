@@ -45,7 +45,11 @@ class Program
     static void Fight(Hero obj)
     {
         var Enemie = new Enemy();
-
+        Console.WriteLine($"CAREFULL, A {Enemie.name} SPAWNED");
+        while (obj.Hp > 0 || Enemie.Hp > 0)
+        {
+            // Cuerpo del bucle
+        }
 
     }
 }
@@ -61,16 +65,16 @@ class Enemy : Entity
 {
     static Random random = new Random();
     private int randomN = random.Next(0, 5); 
-    private string[] EnemiesList = { "Skeleton", "Zombie", "Vampire", "Spider", "Goblin" };
-    private string randomElement;
+    public string[] EnemiesList = { "SKELETON", "ZOMBIE", "VAMPIRE", "SPIDER", "GOBLIN" };
+    private string randomName;
 
     public Enemy()
     {
-        randomElement = EnemiesList[randomN];
-        Console.WriteLine($"Enemy encountered: {randomElement}");
+        randomName = EnemiesList[randomN];
         Str = random.Next(1, 7);
         Spd = random.Next(1, 7);
         Hp = random.Next(10, 50);
+        name = randomName;
     }
 }
 

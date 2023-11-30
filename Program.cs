@@ -4,7 +4,7 @@ class Program
 {
     static void Main()
     {
-        Console.WriteLine("WELCOME TO SUPERHERO ACADEMY");
+        Console.WriteLine("WELCOME TO HERO ACADEMY");
 
         Console.Write("Enter hero name: ");
         string heroName = Console.ReadLine();
@@ -42,13 +42,40 @@ class Program
         //Revisar y colocar puntos de estadistica
     }
 
-    static void Fight(Hero obj)
+    static void Fight(Hero Character)
     {
         var Enemie = new Enemy();
         Console.WriteLine($"CAREFULL, A {Enemie.name} SPAWNED");
-        while (obj.Hp > 0 || Enemie.Hp > 0)
+        while (Character.Hp > 0 || Enemie.Hp > 0)
         {
-            // Cuerpo del bucle
+            Console.WriteLine("What do you want to do: ");
+            Console.WriteLine("1) Attack  2) Skill ");
+            int optionSelected = int.Parse(Console.ReadLine());
+            switch (optionSelected) {
+                case 1:
+                    {
+                        Console.WriteLine($"YOU ATTACKED YOUR ENEMY AND DEALED {Character.Str} DAMAGE");
+                        Enemie.Hp -= Character.Str;
+                        break;
+                    }
+                case 2:
+                    {
+                        if (Character.energy > 0)
+                        {
+                            Character.UseSkill();
+                        }
+                        else
+                        {
+                            Console.WriteLine("No more skill uses left!");
+                        }
+                        break;
+                    }
+                default: {
+                        break;
+                    }
+
+            }
+
         }
 
     }
@@ -86,6 +113,7 @@ class Hero : Entity
     private string[] Powers;
     private int lvl = 1;
     private int fightClass;
+    public int energy = 3;
 
     static Random random = new Random();
 
@@ -126,11 +154,21 @@ class Hero : Entity
         Spd = random.Next(2, 5);
         Hp = random.Next(15, 40);
 
-        Console.WriteLine($"Now you have to select your powers, we have selected a random number of powers, think very much about your power");
+        Console.WriteLine($"Now you have to select your attack skills, we have selected a random number of powers, think very much about your power");
         for (int i = 0; i < Powers.Length; i++)
         {
-            Console.WriteLine("Put the name of the power:");
+            Console.WriteLine("Put the name of the attack skills:");
             Powers[i] = Console.ReadLine();
+        }
+    }
+
+    public void UseSkill()
+    {
+        if (energy > 0)
+        {
+            energy -= 1;
+            Console.WriteLine($"You have used {Powers[random.Next(0, Powers.Length)]}, You dealed {Str + (Str * 1.5)} damage");
+            Console.WriteLine($"You have {energy} energy left");
         }
     }
 }

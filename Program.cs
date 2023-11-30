@@ -46,7 +46,7 @@ class Program
     {
         var Enemie = new Enemy();
         Console.WriteLine($"CAREFULL, A {Enemie.name} SPAWNED");
-        while (Character.Hp > 0 || Enemie.Hp > 0)
+        while (Character.Hp > 0 && Enemie.Hp > 0)
         {
             Console.WriteLine("What do you want to do: ");
             Console.WriteLine("1) Attack  2) Skill ");
@@ -63,6 +63,7 @@ class Program
                         if (Character.energy > 0)
                         {
                             Character.UseSkill();
+                            Enemie.Hp -= Character.Str * 1.5;
                         }
                         else
                         {
@@ -85,7 +86,7 @@ class Entity
 {
     public int Str { get; set; }
     public int Spd { get; set; }
-    public int Hp { get; set; }
+    public double Hp { get; set; }
     public string name { get; set; }
 }
 class Enemy : Entity
@@ -104,7 +105,6 @@ class Enemy : Entity
         name = randomName;
     }
 }
-
 
 class Hero : Entity
 {

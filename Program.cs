@@ -2,7 +2,6 @@
 
 class Program
 {
-
     static void Main()
     {
         Console.WriteLine("WELCOME TO SUPERHERO ACADEMY");
@@ -13,21 +12,83 @@ class Program
         Console.WriteLine("There are 5 classes: 0) Hands 1) Sword 2) Ranged 3) Wizard 4) Summoner");
         int fightClass = int.Parse(Console.ReadLine());
         Hero myHero = new Hero(heroName, fightClass);
+        Menu(myHero);
+    }
+    static void Menu(Hero obj)
+    {
+        Console.WriteLine("What do you want to do now?");
+        Console.WriteLine("1) Train 2) Stats 3) Left the game");
+        int selectedOption = int.Parse(Console.ReadLine());
+        switch (selectedOption)
+        {
+            case 1: {
+                    Fight(obj);
+                    break;
+                }
+            case 2: {
+                    Stats(obj);
+                    break;
+                };
+            default:
+                {
+                    break;
+                }
+
+
+        }
+    }
+    static void Stats(Hero obj)
+    {
+        //Revisar y colocar puntos de estadistica
+    }
+
+    static void Fight(Hero obj)
+    {
+        var Enemie = new Enemy();
+
+
     }
 }
 
-class Hero
-{   
+class Entity
+{
+    public int Str { get; set; }
+    public int Spd { get; set; }
+    public int Hp { get; set; }
+    public string name { get; set; }
+}
+class Enemy : Entity
+{
+    static Random random = new Random();
+    private int randomN = random.Next(0, 5); 
+    private string[] EnemiesList = { "Skeleton", "Zombie", "Vampire", "Spider", "Goblin" };
+    private string randomElement;
+
+    public Enemy()
+    {
+        randomElement = EnemiesList[randomN];
+        Console.WriteLine($"Enemy encountered: {randomElement}");
+        Str = random.Next(1, 7);
+        Spd = random.Next(1, 7);
+        Hp = random.Next(10, 50);
+    }
+}
+
+
+class Hero : Entity
+{
+    private int statPoints = 0;
     private int PowersNum;
     private string[] Powers;
-    private string name;
+    private int lvl = 1;
     private int fightClass;
-    
+
     static Random random = new Random();
+
     public Hero(string heroName, int heroFightClass)
     {
-        PowersNum = random.Next(1, 5); // Mover la inicialización a constructor
-        Powers = new string[PowersNum]; // Inicializar array aquí
+        PowersNum = random.Next(1, 5);
+        Powers = new string[PowersNum];
 
         name = heroName;
         Console.WriteLine($"The hero's name is: {name}");
@@ -57,12 +118,15 @@ class Hero
                 throw new ArgumentException("Invalid class selection");
         }
 
-        Console.WriteLine($"Now you have to select your powers, we have selected a random number of powers, think very much your power");
+        Str = random.Next(2, 5);
+        Spd = random.Next(2, 5);
+        Hp = random.Next(15, 40);
+
+        Console.WriteLine($"Now you have to select your powers, we have selected a random number of powers, think very much about your power");
         for (int i = 0; i < Powers.Length; i++)
         {
             Console.WriteLine("Put the name of the power:");
             Powers[i] = Console.ReadLine();
-
         }
     }
 }

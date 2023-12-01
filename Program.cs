@@ -21,11 +21,13 @@ class Program
         int selectedOption = int.Parse(Console.ReadLine());
         switch (selectedOption)
         {
-            case 1: {
+            case 1:
+                {
                     Fight(obj);
                     break;
                 }
-            case 2: {
+            case 2:
+                {
                     Stats(obj);
                     break;
                 };
@@ -39,27 +41,27 @@ class Program
     }
     static void Stats(Hero obj)
     {
-        //Revisar y colocar puntos de estadistica
     }
-
-    static void Fight(Hero Character)
-    {
-        var Enemie = new Enemy();
-        Console.WriteLine($"CAREFULL, A {Enemie.name} SPAWNED");
-        while (Character.Hp > 0 && Enemie.Hp > 0)
+        static void Fight(Hero Character)
         {
-            Console.WriteLine("What do you want to do: ");
-            Console.WriteLine("1) Attack  2) Skill ");
-            int optionSelected = int.Parse(Console.ReadLine());
-            switch (optionSelected) {
-                case 1:
-                    {
+            var Enemie = new Enemy();
+            Console.WriteLine($"CAREFULL, A {Enemie.name} SPAWNED");
+
+            while (Character.Hp > 0 && Enemie.Hp > 0)
+            {
+                Console.WriteLine("What do you want to do: ");
+                Console.WriteLine("1) Attack  2) Skill ");
+                int optionSelected = int.Parse(Console.ReadLine());
+
+                // Acciones del jugador
+                switch (optionSelected)
+                {
+                    case 1:
                         Console.WriteLine($"YOU ATTACKED YOUR ENEMY AND DEALED {Character.Str} DAMAGE");
                         Enemie.Hp -= Character.Str;
                         break;
-                    }
-                case 2:
-                    {
+
+                    case 2:
                         if (Character.energy > 0)
                         {
                             Character.UseSkill();
@@ -70,17 +72,25 @@ class Program
                             Console.WriteLine("No more skill uses left!");
                         }
                         break;
-                    }
-                default: {
+
+                    default:
                         break;
-                    }
-
+                }
+                Console.WriteLine($"{Enemie.name} ATTACKS YOU AND DEALS {Enemie.Str} DAMAGE");
+                Character.Hp -= Enemie.Str;
             }
-
+            if (Character.Hp <= 0)
+            {
+                Console.WriteLine("YOU WERE DEFEATED!");
+            }
+            else
+            {
+                Console.WriteLine($"CONGRATULATIONS! YOU DEFEATED {Enemie.name}!");
+            }
         }
-
     }
-}
+
+
 
 class Entity
 {
@@ -89,6 +99,7 @@ class Entity
     public double Hp { get; set; }
     public string name { get; set; }
 }
+
 class Enemy : Entity
 {
     static Random random = new Random();
